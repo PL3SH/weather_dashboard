@@ -1,27 +1,39 @@
-# app/views/weather/index.html.erb
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-8">Weather Dashboard</h1>
+<div class="bg-gradient-to-br from-gray-900 to-black min-h-screen text-white p-8 w-full rounded-lg">
+
+  <div class="relative bg-gray-800/30 backdrop-blur-md mb-8 p-8 rounded-lg">
+  <!-- Header Section -->
+  <h1 class="text-4xl font-bold text-center mb-6 ">WEATHER DASHBOARD</h1>
   
-  <%= form_with url: search_weather_path, class: "mb-8", data: { remote: true } do |f| %>
-    <div class="flex gap-4">
+  <!-- Search Form -->
+  <%= form_with url: search_weather_index_path, local: false, class: "mb-8 flex justify-center z-50" , data: { remote: true } do |f| %>
+    <div class="flex items-center gap-4 bg-gray-700 p-4 rounded-lg w-full max-w-4xl z-50">
       <%= f.text_field :city, 
           placeholder: "Enter city name", 
-          class: "flex-1 p-2 border rounded" %>
+          class: "flex-1 p-3 text-lg rounded-lg bg-gray-800 text-white placeholder-gray-400 border-none focus:ring focus:ring-blue-500 z-50" %>
       <%= f.text_field :country_code, 
-          placeholder: "Country code (e.g., US)", 
-          class: "w-32 p-2 border rounded" %>
+          placeholder: "Country (e.g., US)", 
+          class: "w-28 p-3 text-lg rounded-lg bg-gray-800 text-white placeholder-gray-400 border-none focus:ring focus:ring-blue-500 z-50" %>
       <%= f.submit "Get Weather", 
-          class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
+          class: "px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition" %>
     </div>
   <% end %>
-  
-  <div id="weather-results" class="mb-8">
+  </div>
+
+
+
+
+
+   
+  <div id="weather-results" class="mb-8 bg-gray-700">
     <%= render partial: 'weather_info' if @weather %>
   </div>
   
-  <div class="recent-searches">
+  
+  <div class="recent-searches  ">
     <h2 class="text-xl font-semibold mb-4">Recent Searches</h2>
     <%= render partial: 'recent_locations', locals: { locations: @recent_locations } %>
   </div>
+
+  
 </div>
 

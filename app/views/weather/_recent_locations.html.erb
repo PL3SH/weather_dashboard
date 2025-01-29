@@ -1,0 +1,38 @@
+<% if locations.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+    <% locations.each do |location| %>
+      <div class=" shadow rounded-lg p-4 hover:shadow-md transition-shadow bg-gray-700 z-30">
+        <div class="flex items-center justify-between">
+        <!– button to send user to location/id-->
+        <%= link_to location, class: "" do %>
+          <div>
+            <h3 class="font-semibold text-lg">
+              <%= location.city %>, <%= location.country_code %>
+            </h3>
+            <p class="text-sm text-gray-500">
+              <%= time_ago_in_words(location.created_at) %> ago
+            </p>
+          </div>
+          <% end %>
+  
+          <%= button_to search_weather_index_path,
+              method: :post,
+              class: "text-blue-500 hover:text-blue-600",
+              data: { remote: true },
+              params: { city: location.city, country_code: location.country_code } do %>
+            <i class="fas fa-sync-alt"></i> <!-- Asumiendo que usas Font Awesome -->
+          <% end %>
+        </div>
+        <% first_weather_record = location.weather_records.recent.first %>
+        <% if first_weather_record&.temperature.present? %>
+          <div class="mt-2 text-gray-600">
+            <span class="font-medium"><%= first_weather_record.temperature %>°C</span>
+            <span class="text-sm"><%= first_weather_record.description %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-gray-500 italic">No hay búsquedas recientes</p>
+<% end %>
