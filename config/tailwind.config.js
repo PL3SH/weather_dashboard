@@ -1,6 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  mode:'jit',
   content: [
     './public/*.html',
     './app/helpers/**/*.rb',
@@ -10,7 +11,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        'ndot': ['Ndot', 'sans-serif'],
+        sans: ['Fira Code', 'monospace'],
+        brand: ['Nothing', 'sans-serif'],
+        material: ['"Material Symbols Outlined"', 'sans-serif'],
+        
       },
     },
   },

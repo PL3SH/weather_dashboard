@@ -1,0 +1,16 @@
+<div class="container mx-auto px-4">
+  <h1 class="text-2xl font-bold mb-4">Saved Locations</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% @locations.each do |location| %>
+      <%= link_to location_path(location), class: "block" do %>
+        <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg transition-shadow">
+          <h2 class="text-xl font-semibold"><%= location.full_name %></h2>
+          <p class="text-gray-600">Searched <%= pluralize(location.search_count, 'time') %></p>
+          <%= link_to 'View History', weather_history_location_path(location), 
+              class: "text-blue-600 hover:underline" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
