@@ -1,117 +1,103 @@
-<div class="min-h-screen bg-zinc-900 font-mono antialiased relative p-8">
-  <!-- Patrones geométricos de fondo -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-    <div class="absolute top-0 right-0 w-[800px] h-[800px] rounded-full border-[60px] border-teal-500/20 -translate-y-1/2 translate-x-1/2"></div>
-    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full border-[40px] border-emerald-500/20 translate-y-1/2 -translate-x-1/2"></div>
-    <div class="absolute top-1/2 left-1/2 w-[300px] h-[300px] rotate-45 border-[20px] border-cyan-500/20 -translate-x-1/2 -translate-y-1/2"></div>
-  </div>
+<div class="min-h-screen bg-zinc-950 font-mono antialiased relative p-4 ">
+  <!-- Overlay de ruido estático -->
+  <div class="absolute  inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjQiIGhlaWdodD0iNCIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+')] pointer-events-none"></div>
 
-  <div class="container mx-auto max-w-[1800px] relative">
-    <!-- Encabezado con elementos circulares -->
-    <div class="mb-16 relative">
-      <div class="absolute -left-4 top-0 w-2 h-full bg-gradient-to-b from-emerald-500/50 to-teal-500/50"></div>
-      <div class="pl-8">
-        <div class="flex items-baseline gap-6">
-          <h1 class="text-8xl text-white font-bold tracking-tighter">
-            <%= @location.full_name %>
+  <div class="container mx-auto max-w-[1800px] relative ">
+    <!-- Barra de estado superior -->
+    <div class=" bg-red-900/20 border-2 border-red-500/30 p-2 mb-8 flex items-center justify-between hover:invert">
+      <span class="text-red-500 text-sm tracking-widest animate-pulse">EMERGENCY WEATHER MONITORING SYSTEM</span>
+      <span class="text-red-500/70 text-sm"><%= @location.weather_records.last.updated_at.strftime("UTC: %H:%M:%S") %></span>
+    </div>
+
+    <!-- Encabezado con estilo de advertencia -->
+    <div class="mb-12">
+      <div class="flex flex-col">
+        <div class="text-xs text-yellow-500/70 mb-1 tracking-[0.5em]">LOCATION_ID: <%= rand(1000..9999) %></div>
+        <div class="flex items-baseline gap-4">
+          <h1 class="text-8xl text-yellow-500 font-bold uppercase tracking-tighter warning-text">
+            <%= @location.name %>
           </h1>
-          <div class="relative">
-            <div class="absolute -inset-2 rounded-full border-2 border-emerald-500/30 animate-pulse"></div>
-            <span class="text-emerald-400 text-3xl"><%= @location.country_code %></span>
-          </div>
-        </div>
-        <div class="mt-4 flex items-center gap-4">
-          <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
-          <span class="text-emerald-400/70 text-xl tracking-wider">
-            <%= @location.weather_records.last.updated_at.strftime("%H:%M:%S / %d.%m.%Y") %>
-          </span>
+          <span class="text-yellow-500/50 text-3xl"><%= @location.country_code %></span>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-8">
-      <!-- Panel principal -->
-      <div class="col-span-8 space-y-8">
-        <!-- Display de temperatura con diseño circular -->
-        <div class="relative bg-zinc-800 rounded-[3rem] p-12 overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-teal-900/20"></div>
-          <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full border-[30px] border-emerald-500/10"></div>
+    <div class="grid grid-cols-12 gap-4">
+      <!-- Panel principal de datos -->
+      <div class="col-span-8 space-y-4">
+        <!-- Display de temperatura crítico -->
+        <div class="bg-black border-4 border-yellow-500/50 p-8 relative group">
+          <div class="absolute top-2 right-3 flex gap-2">
+            <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+            <div class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-75"></div>
+          </div>
           
-          <div class="relative flex items-start justify-between">
-            <div class="text-[14rem] text-white font-bold leading-none tracking-tighter">
+          <div class="flex items-start justify-between">
+            <div class="text-[12rem] text-yellow-500 font-bold leading-none tracking-tighter warning-glow">
               <%= @location.weather_records.last.temperature.to_i %>°
-              <div class="absolute -bottom-8 left-4 text-2xl text-emerald-400 tracking-widest">CELSIUS</div>
             </div>
-            <div class="mt-8 p-8 rounded-[2rem] bg-zinc-900/50 backdrop-blur-sm border border-emerald-500/20">
-              <div class="text-3xl text-emerald-400 uppercase mb-3 tracking-wider">
+            <div class="mt-6 text-right">
+              <div class="text-3xl text-yellow-500 uppercase mb-2 tracking-widest">
                 <%= @location.weather_records.last.description %>
               </div>
-              <div class="text-xl text-emerald-400/70">
-                Sensación térmica <%= @location.weather_records.last.feels_like %>°C
+              <div class="text-xl text-yellow-500/70">
+                THERMAL_INDEX: <%= @location.weather_records.last.feels_like %>°C
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Grid de datos con formas geométricas -->
-        <div class="grid grid-cols-2 gap-6">
+        <!-- Grid de datos críticos -->
+        <div class="grid grid-cols-2 gap-4">
           <% [
-            ["MÉTRICAS TÉRMICAS", "MIN: #{@location.weather_records.last.temp_min}°C", "MAX: #{@location.weather_records.last.temp_max}°C"],
-            ["PRESIÓN ATMOSFÉRICA", "#{@location.weather_records.last.pressure} Pa", "HUMEDAD: #{@location.weather_records.last.humidity}%"],
-            ["NIVELES ALTITUD", "NIVEL MAR: #{@location.weather_records.last.sea_level}M", "SUELO: #{@location.weather_records.last.grnd_level}M"],
-            ["COORDENADAS", "LAT: #{@location.latitude}", "LON: #{@location.longitude}"]
-          ].each_with_index do |(title, line1, line2), index| %>
-            <div class="relative bg-zinc-800 rounded-[2rem] p-8 overflow-hidden group">
-              <div class="absolute <%= index % 2 == 0 ? '-right-8 -top-8' : '-left-8 -bottom-8' %> w-32 h-32 
-                           <%= index % 2 == 0 ? 'rounded-full' : 'rotate-45' %> 
-                           border-[12px] border-emerald-500/10"></div>
-              
-              <div class="relative">
-                <div class="text-emerald-400/70 text-sm tracking-[0.3em] mb-6 flex items-center gap-3">
-                  <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                  <%= title %>
-                </div>
-                <p class="text-white text-2xl mb-3"><%= line1 %></p>
-                <p class="text-white text-2xl"><%= line2 %></p>
+            ["CRITICAL_METRICS", "MIN_TEMP: #{@location.weather_records.last.temp_min}°C", "MAX_TEMP: #{@location.weather_records.last.temp_max}°C"],
+            ["PRESSURE_WARNING", "ATM_PRESS: #{@location.weather_records.last.pressure} Pa", "HUMIDITY: #{@location.weather_records.last.humidity}%"],
+            ["ELEVATION_ALERT", "SEA_LVL: #{@location.weather_records.last.sea_level}M", "GND_LVL: #{@location.weather_records.last.grnd_level}M"],
+            ["COORDINATE_LOCK", "LAT: #{@location.latitude}", "LON: #{@location.longitude}"]
+          ].each do |title, line1, line2| %>
+            <div class="bg-black border-2 border-yellow-500/30 p-6 hover:border-yellow-500/50 transition-all duration-300">
+              <div class="text-yellow-500/70 text-xs tracking-[0.3em] mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 bg-yellow-500 animate-pulse"></span>
+                <%= title %>
               </div>
+              <p class="text-yellow-500 text-xl mb-2 font-bold tracking-wider"><%= line1 %></p>
+              <p class="text-yellow-500 text-xl font-bold tracking-wider"><%= line2 %></p>
             </div>
           <% end %>
         </div>
       </div>
 
-      <!-- Panel lateral -->
-      <div class="col-span-4 space-y-6">
-        <!-- Visualización del clima -->
-        <div class="bg-zinc-800 rounded-[3rem] p-8 relative overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-teal-900/20"></div>
-          <div class="absolute -left-12 -bottom-12 w-48 h-48 rounded-full border-[20px] border-emerald-500/10"></div>
-          
-          <div class="relative flex justify-center items-center h-80">
+      <!-- Panel de monitoreo lateral -->
+      <div class="col-span-4 space-y-4">
+        <!-- Visualización de condiciones -->
+        <div class="bg-black border-4 border-red-500/30 p-6 relative">
+          <div class="absolute top-2 right-3 text-red-500/70 text-xs tracking-[0.3em]">[WEATHER_STATUS]</div>
+          <div class="flex justify-center items-center h-80">
             <% case @location.weather_records.last.id_status 
                when 800 %>
-                <%= image_tag "sunny_day.svg", class: "w-48 h-48 brightness-110 contrast-110 hue-rotate-[45deg]" %>
+                <%= image_tag "sunny_day.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse " %>
               <% when 801..804 %>
-                <%= image_tag "cloudy_sun.svg", class: "w-48 h-48" %>
+                <%= image_tag "cloudy_sun.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% when 500..531, 300..321 %>
-                <%= image_tag "rainy_sun.svg", class: "w-48 h-48" %>
+                <%= image_tag "rainy_sun.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% when 200..232 %>
-                <%= image_tag "thunderstorm_sun.svg", class: "w-48 h-48" %>
+                <%= image_tag "thunderstorm_sun.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% when 600..622 %>
-                <%= image_tag "snow_sun.svg", class: "w-48 h-48" %>
+                <%= image_tag "snow_sun.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% when 701..781 %>
-                <%= image_tag "mist_sun.svg", class: "w-48 h-48" %>
+                <%= image_tag "mist_sun.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% else %>
-                <%= image_tag "sunny_day.svg", class: "w-48 h-48" %>
+                <%= image_tag "sunny_day.svg", class: "w-48 h-48  hue-rotate-[35deg] animate-pulse" %>
               <% end %>
           </div>
         </div>
 
-        <!-- Botón de retorno -->
+        <!-- Botón de evacuación -->
         <%= link_to root_path, class: "block" do %>
-          <div class="group bg-zinc-800 rounded-full p-6 hover:bg-zinc-700 transition-all duration-300 border border-emerald-500/20">
-            <span class="text-emerald-400 flex items-center justify-between">
-              <span class="tracking-[0.2em]">VOLVER</span>
-              <span class="group-hover:translate-x-2 transition-transform duration-300">→</span>
+          <div class="bg-red-900/20 border-2 border-red-500/30 p-4 hover:bg-red-500/10 transition-all duration-300 group ">
+            <span class="text-red-500 flex items-center justify-between tracking-[0.2em] hover:invert">
+              <span>[BACK_TO_MAIN]</span>
+              <span class="group-hover:translate-x-2 transition-transform duration-300 ">→</span>
             </span>
           </div>
         <% end %>
@@ -119,22 +105,28 @@
     </div>
 
     <!-- Barra de estado inferior -->
-    <div class="mt-12 bg-zinc-800 rounded-full p-4 border border-emerald-500/20">
-      <p class="text-emerald-400/70 tracking-[0.2em] flex items-center justify-center gap-4">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        SISTEMA ACTIVO :: MONITOREO EN CURSO :: ESTADO: ÓPTIMO
+    <div class="mt-8 bg-red-900/20 border-2 border-red-500/30 p-2">
+      <p class="text-red-500/70 text-sm tracking-[0.2em] flex items-center gap-4">
+        <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+        CAUTION: SYSTEM MONITORING ACTIVE :: ALERT LEVEL: DELTA :: STAND BY FOR FURTHER INSTRUCTIONS
       </p>
     </div>
   </div>
 </div>
 
 <style>
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.warning-text {
+  text-shadow: 
+    0 0 10px rgba(234, 179, 8, 0.3),
+    0 0 20px rgba(234, 179, 8, 0.2);
 }
 
-.float {
-  animation: float 6s ease-in-out infinite;
+.warning-glow {
+  animation: warning-pulse 3s infinite;
+}
+
+@keyframes warning-pulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
+  50% { text-shadow: 0 0 40px rgba(234, 179, 8, 0.5); }
 }
 </style>

@@ -8,3 +8,30 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+ .dm-serif-text-regular {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .dm-serif-text-regular-italic {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'Ndot';
+    src: url('/fonts/Ndot77JPExtended.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .ndot-font {
+    font-family: 'Ndot', sans-serif;
+  }
+
+  .test-font {
+    font-family: 'Ndot', sans-serif;
+    font-size: 24px;
+  }
