@@ -8,7 +8,7 @@ class Location < ApplicationRecord
 
 
     def full_name
-        "#{city} , #{country_code}"
+        "#{city}, #{country_code}"
     end
 
     def coordinates
