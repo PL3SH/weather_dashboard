@@ -1,0 +1,43 @@
+services:
+  web:
+    build:
+      context: .
+    image: weather_web
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - '8085:3000'
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+volumes:
+  pg_data:
+  redis_data:
+  bundle:
+  
