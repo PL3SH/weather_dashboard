@@ -1,39 +1,151 @@
 <!DOCTYPE html>
-<html  >
+<html class="bg-zinc-950 h-screen overflow-hidden">
   <head>
-    <title><%= content_for(:title) || "Weather Dashboard" %></title>
+    <title>[WEATHER_MONITOR_<%= content_for(:title) || "SYSTEM" %>]</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#09090B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Nothing&display=swap" rel="stylesheet">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
-    </style>
+    
+    <!-- Fuentes del sistema -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <!-- Manifest para PWA -->
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) if defined?(pwa_manifest_path) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <!-- Iconos del sistema -->
+    <link rel="icon" href="https://play-lh.googleusercontent.com/WwGKunPdHlhh7DvuA0ZhXwzS-vwRGuAeB9o1lfIgpDXLGWTFvzgTkrTmY1Xf1uhID-8" type="image/png">
+    <link rel="apple-touch-icon" href="https://play-lh.googleusercontent.com/WwGKunPdHlhh7DvuA0ZhXwzS-vwRGuAeB9o1lfIgpDXLGWTFvzgTkrTmY1Xf1uhID-8">
+    
+    <!-- Estilos del sistema -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    
+
+    <!-- Estilos base del sistema -->
+    <style>
+      :root {
+        --system-warning: #EAB308;
+        --system-danger: #DC2626;
+        --system-background: #09090B;
+      }
+
+      html, body {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      body {
+        background-color: var(--system-background);
+        font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      ::selection {
+        background: var(--system-warning);
+        color: var(--system-background);
+      }
+
+      /* Scrollbar personalizada */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--system-background);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--system-warning);
+        border: 2px solid var(--system-background);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--system-danger);
+      }
+
+      /* Efecto CRT */
+      .crt::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(
+          rgba(18, 16, 16, 0) 50%,
+          rgba(0, 0, 0, 0.25) 50%
+        );
+        background-size: 100% 4px;
+        z-index: 2;
+        pointer-events: none;
+        animation: flicker 0.15s infinite;
+      }
+
+      @keyframes flicker {
+        0% { opacity: 0.27861 }
+        5% { opacity: 0.34769 }
+        10% { opacity: 0.23604 }
+        15% { opacity: 0.90626 }
+        20% { opacity: 0.18128 }
+        25% { opacity: 0.83891 }
+        30% { opacity: 0.65583 }
+        35% { opacity: 0.67807 }
+        40% { opacity: 0.26559 }
+        45% { opacity: 0.84693 }
+        50% { opacity: 0.96019 }
+        55% { opacity: 0.08594 }
+        60% { opacity: 0.20313 }
+        65% { opacity: 0.71988 }
+        70% { opacity: 0.53455 }
+        75% { opacity: 0.37288 }
+        80% { opacity: 0.71428 }
+        85% { opacity: 0.70419 }
+        90% { opacity: 0.7003 }
+        95% { opacity: 0.36108 }
+        100% { opacity: 0.24387 }
+      }
+    </style>
   </head>
 
-  <body class="bg-black">
-    <main class="container mx-auto mt-28 px-5 flex  text-black ">
-      <%= yield %>
+  <body class="crt h-screen">
+    <!-- Overlay de ruido estático global -->
+    <div class="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjQiIGhlaWdodD0iNCIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+')] pointer-events-none"></div>
+
+    <!-- Contenedor principal -->
+    <main class="relative h-screen  flex flex-col ">
+      <!-- Barra de sistema superior global -->
+      <div class="bg-red-900/20 border-b-2 border-red-500/30 p-1">
+        <div class="container mx-auto flex justify-between items-center text-[10px] text-red-500/70">
+          <span class="tracking-[0.2em]">SYSTEM_BOOT: <%= Time.current.strftime("%Y%m%d.%H%M") %></span>
+          <span class="animate-pulse">[SYSTEM_ACTIVE]</span>
+        </div>
+      </div>
+
+      <!-- Contenido principal centrado -->
+      <div class=" flex-1 flex items-center justify-center ">
+        <div class="w-full pt-20 max-h-[calc(100vh-5rem)] overflow-hidden">
+          <%= yield %>
+        </div>
+      </div>
+
+      <!-- Barra de sistema inferior global -->
+      <div class="bg-red-900/20 border-t-2 border-red-500/30 p-1">
+        <div class="container mx-auto text-[10px] text-red-500/70 tracking-[0.2em] text-center">
+          WEATHER_MONITORING_SYSTEM :: VERSION 2.8.4 :: ALL_SYSTEMS_NOMINAL
+        </div>
+      </div>
     </main>
+
+    <%= yield :scripts %>
   </body>
 </html>
