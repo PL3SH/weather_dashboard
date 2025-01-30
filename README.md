@@ -156,7 +156,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Contributors and maintainers
   svg art by Mikołaj Niżnik you can find his art in [https://www.figma.com/community/file/1023658389987124693](https://www.figma.com/@mniznik)
 ## Contact
+🧑Miguel Angel Briñez Rivas
+🐱‍👤www.linkedin.com/in/miguelbrinez
+📞3028405873
+✉brinezrivasmiguelangel@gmail.com
 
- [Miguel Angel Briñez Rivas](www.linkedin.com/in/miguelbrinez)
-www.linkedin.com/in/miguelbrinez
 
