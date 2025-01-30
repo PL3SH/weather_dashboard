@@ -2,8 +2,11 @@
 
 A modern, retro-styled weather monitoring system built with Ruby on Rails 8. This application provides real-time weather tracking with a unique CRT-style interface inspired by classic monitoring systems.
 
-![Weather Dashboard Screenshot]
-<!-- Add a screenshot of your application here -->
+![image](https://github.com/user-attachments/assets/5c3f8fa9-5622-49bc-b782-b6a8a5a7aa37)
+![image](https://github.com/user-attachments/assets/c26145ba-0174-413e-92ed-ad98522ff111)
+![image](https://github.com/user-attachments/assets/4956cfd4-ae50-44c8-8eaa-a9de3605a878)
+![image](https://github.com/user-attachments/assets/fc3175b1-8bda-4405-99ee-50dbf524bfb3)
+
 
 ## Features
 
@@ -13,7 +16,6 @@ A modern, retro-styled weather monitoring system built with Ruby on Rails 8. Thi
 - 🗺️ Geocoding integration
 - 💾 Weather data caching system
 - 🖥️ Retro CRT-style interface
-- 📱 Responsive design
 - 🌐 OpenWeatherMap API integration
 
 ## Tech Stack
@@ -31,7 +33,6 @@ A modern, retro-styled weather monitoring system built with Ruby on Rails 8. Thi
 - **Deployment:** Docker & Kamal
 
 ## Prerequisites
-
 - Ruby 3.x
 - PostgreSQL
 - Node.js & Yarn
