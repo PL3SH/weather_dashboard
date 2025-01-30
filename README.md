@@ -154,7 +154,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - OpenWeatherMap API for weather data
 - Rails community for the amazing framework
 - Contributors and maintainers
-
+  svg art by Mikołaj Niżnik you can find his art in [https://www.figma.com/community/file/1023658389987124693](https://www.figma.com/@mniznik)
 ## Contact
 
 Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
