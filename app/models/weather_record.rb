@@ -6,7 +6,7 @@ class WeatherRecord < ApplicationRecord
     validates :description, presence: true
     validates :recorded_at, presence: true
 
-    #this scope query all the recent registers of location
+    # this scope query all the recent registers of location
     scope :recent, -> { where("recorded_at >= ?", 30.minutes.ago) }
 
     def location_params
@@ -22,7 +22,7 @@ class WeatherRecord < ApplicationRecord
     # 800: Clear sky
     # 801-804: Cloud conditions
     # @return [Integer] weather condition ID
-    #get the id_status to use in location view
+    # get the id_status to use in location view
     def id_status
       raw_data.dig("weather", 0, "id")
     end
@@ -31,9 +31,9 @@ class WeatherRecord < ApplicationRecord
    #     raw_data.dig("main", "feels_like")
    # end
 
-    #this array stores the main keys that i would need to show data in my views
+   # this array stores the main keys that i would need to show data in my views
    MAIN_KEYS = [ "temp", "feels_like", "temp_min", "temp_max", "pressure", "humidity", "sea_level", "grnd_level" ]
-  #using define method create methods to access the data easily
+   # using define method create methods to access the data easily
    MAIN_KEYS.each do |key|
      define_method(key.to_sym) do
        raw_data.dig("main", key)

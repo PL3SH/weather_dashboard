@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   # Weather routes
   resources :weather, only: [ :index ] do
-    #create route of type collection
+    # create route of type collection
     collection do
       get "search"    # For GET requests (displaying search form)
       post "search"   # For POST requests (processing searches)
@@ -37,10 +37,9 @@ Rails.application.routes.draw do
 
   # Location routes - for managing saved locations
   resources :locations, only: [ :index, :show, :create ], param: :location_id do
-     #create route of type member
+    # create route of type member
     member do
       get "weather_history"
     end
   end
- 
 end

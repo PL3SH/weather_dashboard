@@ -3,10 +3,10 @@ class WeatherController < ApplicationController
     def index
       @recent_locations = Location.order(search_count: :desc).limit(6)  # SELECT * FROM locations ORDER BY search_count DESC LIMIT 5
 
-     
-      #this return us a Location::ActiveRecord_Relation collection with 6 instances of location model
+
+      # this return us a Location::ActiveRecord_Relation collection with 6 instances of location model
     end
-    #search looks in the db if exist a weather record about a location, if not then create the location and fecth the weather data
+    # search looks in the db if exist a weather record about a location, if not then create the location and fecth the weather data
     def search
       @location = find_or_create_location
       @weather = fetch_weather_data
@@ -16,8 +16,8 @@ class WeatherController < ApplicationController
     private
 
     def find_or_create_location
-      #using location model i will seach in the DB if any register exist with this params if exist return it if not  instance one(dont have ID) and save in the variable
-      
+      # using location model i will seach in the DB if any register exist with this params if exist return it if not  instance one(dont have ID) and save in the variable
+
       location = Location.find_or_initialize_by(
         city: location_params[:city],
         country_code: location_params[:country_code]
@@ -25,20 +25,20 @@ class WeatherController < ApplicationController
 
       unless location.persisted? # persisted valida si el dato esta en base de datos si no ejecuta lo del bloque persited validates if data is in BD if not exec exec this code
         coordinates = geocode_location(location_params[:city], location_params[:country_code])
-        # here we get dicc 
+        # here we get dicc
         location.assign_attributes(coordinates)
         location.save!
       end
-      
+
       location.increment!(:search_count)
       location
     end
 
     def fetch_weather_data
-      #in case we have data about locations and weather record we load this
+      # in case we have data about locations and weather record we load this
       cached_weather = @location.weather_records.recent.first
       return cached_weather if cached_weather.present?
-      #if not we use the weather service to get the data
+      # if not we use the weather service to get the data
       weather_service = WeatherService.new
       weather_service.fetch_weather(@location)
     end
@@ -52,7 +52,7 @@ class WeatherController < ApplicationController
         # You can use the geocoder gem or another geocoding service
         # search by city and country code by data and get the first element of the array
         geolocation_data = Geocoder.search("#{city}, #{country_code.downcase}").first
-        #return in a hash the latitude and longitude data
+        # return in a hash the latitude and longitude data
         { latitude: geolocation_data&.latitude, longitude: geolocation_data&.longitude }
     end
 

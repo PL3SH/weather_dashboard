@@ -1,7 +1,6 @@
 # Represents a geographical location with city, country, and coordinates
 # Used to track weather records for specific places
 class Location < ApplicationRecord
-    
     has_many :weather_records
     validates :city, presence: true
     validates :country_code, presence: true, length: { is: 2 }
